@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life to the Brim — Toastmasters Icebreaker</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0e0c;
+    --gold: #c9973a;
+    --gold-light: #e8c06a;
+    --slate: #2a2825;
+    --paper: #f5f0e8;
+    --paper2: #ede7d9;
+    --muted: #7a7469;
+    --accent1: #2d5a8e;
+    --accent2: #7b3d8e;
+    --accent3: #1a6e52;
+  }
+
+  html, body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--paper);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .presentation {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    pointer-events: none;
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .slide.exit {
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  /* Slide 0 - Title */
+  .slide-title { background: var(--ink); text-align: center; }
+
+  .cup { animation: fillUp 2s ease-out 0.5s both; }
+
+  @keyframes fillUp {
+    from { transform: scaleY(0); transform-origin: bottom; }
+    to { transform: scaleY(1); transform-origin: bottom; }
+  }
+
+  .slide-title h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 700;
+    color: var(--paper);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .slide-title h1 em { color: var(--gold); font-style: italic; }
+
+  .slide-title .subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  .slide-title .tagline {
+    margin-top: 32px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--gold-light);
+    opacity: 0;
+    animation: fadeIn 1s ease 1.5s both;
+  }
+
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  .slide-content { width: 100%; max-width: 1000px; }
+
+  .life-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .slide h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4.5vw, 52px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    color: var(--paper);
+  }
+
+  .slide h2 em { font-style: italic; color: var(--gold); }
+
+  .slide p {
+    font-size: clamp(15px, 1.8vw, 18px);
+    line-height: 1.75;
+    color: #c8c0b2;
+    max-width: 700px;
+    font-weight: 300;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .quote-block {
+    border-left: 3px solid var(--gold);
+    padding-left: 24px;
+    margin: 32px 0;
+  }
+
+  .quote-block p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(17px, 2vw, 22px);
+    color: var(--paper);
+  }
+
+  .life-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,151,58,0.25);
+    border-radius: 4px;
+    padding: 32px;
+  }
+
+  .life-card .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: rgba(201,151,58,0.18);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .life-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+  }
+
+  .life-card p { font-size: 14px; line-height: 1.7; color: #a09888; }
+
+  .slide-opening { background: var(--ink); }
+  .slide-life1 { background: linear-gradient(135deg, #0f0e0c 0%, #0d1822 100%); }
+  .slide-web3 { background: linear-gradient(135deg, #0f0e0c 0%, #0d1318 100%); }
+  .slide-end { background: var(--ink); text-align: center; }
+
+  .deco-line { width: 60px; height: 2px; background: var(--gold); margin: 24px 0; }
+  .deco-line.center { margin: 24px auto; }
+
+  .tag-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 24px 0; }
+
+  .tag {
+    font-size: 12px;
+    padding: 6px 16px;
+    border-radius: 2px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+
+  .tag-blue { background: rgba(45,90,142,0.2); color: #7eb3e8; border: 1px solid rgba(45,90,142,0.4); }
+  .tag-amber { background: rgba(201,151,58,0.15); color: var(--gold-light); border: 1px solid rgba(201,151,58,0.3); }
+  .tag-teal { background: rgba(26,110,82,0.2); color: #6dd4a8; border: 1px solid rgba(26,110,82,0.35); }
+  .tag-purple { background: rgba(123,61,142,0.2); color: #c48ee0; border: 1px solid rgba(123,61,142,0.35); }
+
+  .nav {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 100;
+    background: rgba(15,14,12,0.85);
+    backdrop-filter: blur(8px);
+    padding: 10px 20px;
+    border: 1px solid rgba(201,151,58,0.2);
+    border-radius: 32px;
+  }
+
+  .nav-btn {
+    background: none;
+    border: 1px solid rgba(201,151,58,0.35);
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 7px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-btn:hover { background: rgba(201,151,58,0.1); border-color: var(--gold); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+  .slide-counter {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    min-width: 48px;
+    text-align: center;
+  }
+
+  .dots {
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(201,151,58,0.25);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid rgba(201,151,58,0.3);
+  }
+
+  .dot.active { background: var(--gold); transform: scale(1.4); }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transition: width 0.6s ease;
+    z-index: 100;
+  }
+
+  .brim-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    margin: 20px 0;
+  }
+
+  .brim-bar { width: 12px; border-radius: 2px 2px 0 0; background: var(--gold); }
+
+  .big-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3vw, 36px);
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--paper);
+    margin: 32px auto;
+    max-width: 720px;
+  }
+
+  .big-quote em { color: var(--gold); font-style: normal; }
+
+  .people-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 32px 0;
+  }
+
+  .person-card {
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .person-card.highlight {
+    border-color: rgba(201,151,58,0.4);
+    background: rgba(201,151,58,0.05);
+  }
+
+  .person-icon { font-size: 36px; margin-bottom: 12px; }
+
+  .person-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: var(--paper);
+  }
+
+  .person-card p { font-size: 13px; color: var(--muted); }
+
+  .vs-badge {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--ink);
+    border: 1px solid rgba(201,151,58,0.3);
+    color: var(--gold);
+    font-size: 11px;
+    padding: 4px 10px;
+    letter-spacing: 2px;
+    z-index: 2;
+  }
+
+  .glow-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 12px var(--gold);
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .slide-in {
+    opacity: 0;
+    transform: translateX(-16px);
+    animation: slideIn 0.5s ease both;
+  }
+
+  @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+
+  .delay-1 { animation-delay: 0.15s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.45s; }
+  .delay-4 { animation-delay: 0.6s; }
+
+  /* Full text slide */
+  .slide-fulltext {
+    background: var(--ink);
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 48px 80px;
+  }
+
+  .speech-section { margin-bottom: 28px; }
+
+  .speech-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .speech-text {
+    font-size: 15px;
+    line-height: 1.85;
+    color: #c8c0b2;
+    font-weight: 300;
+  }
+
+  /* Hint */
+  .key-hint {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 11px;
+    color: rgba(201,151,58,0.4);
+    letter-spacing: 1px;
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="presentation" id="pres">
+  <div class="progress-bar" id="progress"></div>
+  <div class="key-hint">← → ARROW KEYS</div>
+
+  <!-- Slide 0: Title -->
+  <div class="slide slide-title active" id="s0">
+    <svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100px;height:66px;margin:0 auto 32px;display:block;">
+      <rect x="20" y="10" width="80" height="8" rx="2" fill="#c9973a" opacity="0.8" class="cup"/>
+      <path d="M24 18 L30 72 L90 72 L96 18Z" fill="rgba(201,151,58,0.12)" stroke="#c9973a" stroke-width="1" class="cup"/>
+      <rect x="24" y="42" width="72" height="30" rx="0" fill="rgba(201,151,58,0.25)" class="cup"/>
+      <line x1="14" y1="14" x2="106" y2="14" stroke="#c9973a" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="10" y1="10" x2="10" y2="18" stroke="#c9973a" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="110" y1="10" x2="110" y2="18" stroke="#c9973a" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <div class="subtitle slide-in">Toastmasters Icebreaker</div>
+    <h1 style="margin-top:20px" class="slide-in delay-1">Life to <em>the Brim</em></h1>
+    <div class="deco-line center slide-in delay-2"></div>
+    <p class="tagline">I wanted to live many lives in one lifetime.</p>
+  </div>
+
+  <!-- Slide 1: Opening -->
+  <div class="slide slide-opening" id="s1">
+    <div class="slide-content">
+      <div class="life-tag slide-in">Introduction</div>
+      <h2 class="slide-in delay-1">A picture I could <em>never forget</em></h2>
+      <div class="people-row slide-in delay-2" style="position:relative;">
+        <div class="person-card">
+          <div class="person-icon">🪑</div>
+          <h4>The Craftsman</h4>
+          <p>50 years making the same wooden chair. Mastery through depth.</p>
+        </div>
+        <div class="vs-badge">VS</div>
+        <div class="person-card highlight">
+          <div class="person-icon">🧭</div>
+          <h4>The Explorer</h4>
+          <p>Learns one thing, masters it, then moves on to a new adventure.</p>
+        </div>
+      </div>
+      <div class="quote-block slide-in delay-3">
+        <p>"I didn't want to do just one thing. I wanted to live many lives in one lifetime."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 2: Life 1 -->
+  <div class="slide slide-life1" id="s2">
+    <div class="slide-content two-col">
+      <div>
+        <div class="life-tag slide-in"><span class="glow-dot"></span>Life 1</div>
+        <h2 class="slide-in delay-1">The <em>Golden Script</em></h2>
+        <div class="deco-line slide-in delay-1"></div>
+        <p class="slide-in delay-2" style="margin-bottom:16px;">From traditional banking at <strong style="color:#c8c0b2">Bank of America</strong> — stable, prestigious — to the whirlwind of <strong style="color:#c8c0b2">Ant Financial</strong>.</p>
+        <p class="slide-in delay-3">First-hand witness to how <em style="color:var(--gold-light)">China became a cashless society</em>. At the center of a fintech revolution.</p>
+        <div class="tag-row slide-in delay-4">
+          <span class="tag tag-blue">Bank of America</span>
+          <span class="tag tag-amber">Ant Financial</span>
+          <span class="tag tag-teal">Fintech</span>
+        </div>
+      </div>
+      <div class="slide-in delay-2">
+        <div class="life-card">
+          <div class="num">01</div>
+          <h3>The Cost of Success</h3>
+          <p>Weekends disappeared. The phone never stopped ringing. Long vacations became a distant memory.</p>
+          <br>
+          <p style="color:var(--gold-light);font-style:italic;">"I was successful, but I was exhausted."</p>
+          <br>
+          <p>I had mastered fintech. It was time for my next <strong style="color:#c8c0b2">rebirth</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Life 2 -->
+  <div class="slide slide-web3" id="s3">
+    <div class="slide-content two-col">
+      <div class="slide-in delay-1">
+        <div class="life-card">
+          <div class="num">02</div>
+          <h3>My Real Power</h3>
+          <p>Old world banking + fast world fintech = a <strong style="color:#c8c0b2">unique edge</strong>.</p>
+          <br>
+          <p>I wasn't just starting over.<br>I was <em style="color:var(--gold-light)">combining my lives.</em></p>
+          <br>
+          <p>I learned to see the truth behind the hype. To build digital infrastructure that can change a nation.</p>
+        </div>
+      </div>
+      <div>
+        <div class="life-tag slide-in"><span class="glow-dot"></span>Life 2</div>
+        <h2 class="slide-in delay-1">The <em>Digital Frontier</em></h2>
+        <div class="deco-line slide-in delay-1"></div>
+        <p class="slide-in delay-2" style="margin-bottom:16px;">Four years later — a leap into the <strong style="color:#c8c0b2">"wild west" of Web3</strong>.</p>
+        <p class="slide-in delay-3">Where the line between real and fake is very thin. Where experience becomes your greatest asset.</p>
+        <div class="tag-row slide-in delay-4">
+          <span class="tag tag-purple">Web3</span>
+          <span class="tag tag-teal">SIGN</span>
+          <span class="tag tag-amber">Nation-scale</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Conclusion -->
+  <div class="slide slide-end" id="s4">
+    <div class="slide-content" style="text-align:center;max-width:800px;margin:0 auto;">
+      <div class="life-tag slide-in" style="display:inline-block;">Conclusion</div>
+      <h2 class="slide-in delay-1" style="margin-top:16px;">The future is a <em>blank page</em></h2>
+      <div class="deco-line center slide-in delay-1"></div>
+      <div class="big-quote slide-in delay-2">
+        "Be brave enough to break your old self and keep pouring new colors into your life, until your life is <em>at the brim</em>."
+      </div>
+      <div class="brim-container slide-in delay-3" style="justify-content:center;align-items:flex-end;height:60px;">
+        <div class="brim-bar" style="height:24px;background:#2d5a8e;opacity:0.8;"></div>
+        <div class="brim-bar" style="height:36px;background:#7b3d8e;opacity:0.8;"></div>
+        <div class="brim-bar" style="height:50px;background:#c9973a;"></div>
+        <div class="brim-bar" style="width:2px;height:58px;background:var(--gold-light);"></div>
+      </div>
+      <p class="slide-in delay-4" style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:8px;">BofA · Ant Financial · Web3 · SIGN</p>
+    </div>
+  </div>
+
+  <!-- Slide 5: Full text -->
+  <div class="slide slide-fulltext" id="s5">
+    <div class="slide-content" style="max-width:760px;">
+      <div class="life-tag slide-in">Full Speech · Life to the Brim</div>
+      <div style="margin-top:24px;">
+        <div class="speech-section slide-in delay-1">
+          <p class="speech-label">Opening</p>
+          <p class="speech-text">I once saw a picture in a magazine that I could never forget. It showed two kinds of people. One was a craftsman—someone who spends 50 years making the same wooden chair. The other was an explorer—someone who learns one thing, masters it, and then moves on to a new adventure. I realized I didn't want to do just one thing. I wanted to live many lives in one lifetime. I wanted my life to be at the brim.</p>
+        </div>
+        <div class="speech-section slide-in delay-2">
+          <p class="speech-label">Life 1: The Golden Script</p>
+          <p class="speech-text">My first life was in traditional banking at Bank of America. It was stable and prestigious. But I wanted more. So I moved to Ant Financial. That was a whirlwind. I saw first-hand how China became a cashless society. It was exciting to be at the center of a fintech revolution. But this life came with a price. I lost my balance. My weekends disappeared. My phone never stopped ringing with work calls. Those long, relaxing vacations became a distant memory. I was successful, but I was exhausted. I had mastered the world of fintech, and I knew it was time for my next rebirth.</p>
+        </div>
+        <div class="speech-section slide-in delay-3">
+          <p class="speech-label">Life 2: The Digital Frontier</p>
+          <p class="speech-text">Four years later, I jumped into the "wild west" of Web3. This is where I am now. It was a huge pivot. In this world, the line between what is real and what is fake is very thin. But this is where I found my real power. I realized that my experience in the "old" world of banking and the "fast" world of fintech gave me a unique edge. I wasn't just starting over; I was combining my lives. I learned to see the truth behind the hype. I learned how to build digital infrastructure that can actually change a nation.</p>
+        </div>
+        <div class="speech-section slide-in delay-4">
+          <p class="speech-label">Conclusion</p>
+          <p class="speech-text">Today, I run my company, SIGN. We build the future for nations. But is this my final stop? No. I am no longer afraid of the unknown. To me, the future is a blank page. Fellow Toastmasters, don't just pick one path because it's safe. Be brave enough to break your old self and keep pouring new colors into your life, until your life is at the brim.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <button class="nav-btn" id="prev" disabled>← Prev</button>
+    <span class="slide-counter" id="counter">1 / 6</span>
+    <button class="nav-btn" id="next">Next →</button>
+  </nav>
+
+  <!-- Dots -->
+  <div class="dots" id="dots"></div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const counter = document.getElementById('counter');
+  const progress = document.getElementById('progress');
+  const dotsEl = document.getElementById('dots');
+
+  let current = 0;
+  const total = slides.length;
+  const labels = ['Title','Opening','Life 1','Life 2','Closing','Full Text'];
+
+  labels.forEach((l, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.title = l;
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function updateNav() {
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    counter.textContent = (current + 1) + ' / ' + total;
+    progress.style.width = ((current / (total - 1)) * 100) + '%';
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= total || idx === current) return;
+    const prev = current;
+    slides[prev].classList.remove('active');
+    slides[prev].classList.add('exit');
+    setTimeout(() => slides[prev].classList.remove('exit'), 500);
+    current = idx;
+    slides[current].classList.add('active');
+    slides[current].querySelectorAll('.slide-in').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight;
+      el.style.animation = '';
+    });
+    updateNav();
+  }
+
+  prevBtn.onclick = () => goTo(current - 1);
+  nextBtn.onclick = () => goTo(current + 1);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+  });
+
+  updateNav();
+</script>
+</body>
+</html>
